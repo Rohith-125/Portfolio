@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 25% 6%;
+    --foreground: 210 20% 90%;
+
+    --card: 220 25% 10%;
+    --card-foreground: 210 20% 90%;
+
+    --popover: 220 25% 10%;
+    --popover-foreground: 210 20% 90%;
+
+    --primary: 185 100% 50%;
+    --primary-foreground: 220 25% 6%;
+
+    --secondary: 270 80% 60%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 270 80% 60%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 20% 18%;
+    --input: 220 20% 18%;
+    --ring: 185 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom glassmorphism tokens */
+    --glass-bg: 220 25% 12%;
+    --glass-border: 220 20% 25%;
+    --glow-cyan: 185 100% 50%;
+    --glow-purple: 270 80% 60%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(185 100% 50%) 0%, hsl(270 80% 60%) 100%);
+    --gradient-glow: linear-gradient(135deg, hsl(185 100% 50% / 0.3) 0%, hsl(270 80% 60% / 0.3) 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-outfit antialiased;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, hsl(270 80% 60% / 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, hsl(185 100% 50% / 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, hsl(220 25% 8%) 0%, hsl(220 25% 4%) 100%);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply relative overflow-hidden rounded-2xl border border-border/30;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--glass-bg) / 0.6) 0%,
+      hsl(var(--glass-bg) / 0.3) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .glass-panel::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl opacity-50;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--glass-border) / 0.2) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+  }
+
+  .glow-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-border {
+    @apply relative;
+  }
+
+  .glow-border::after {
+    content: '';
+    @apply absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500;
+    background: var(--gradient-primary);
+    z-index: -1;
+    filter: blur(15px);
+  }
+
+  .glow-border:hover::after {
+    @apply opacity-60;
+  }
+
+  .neon-button {
+    @apply relative overflow-hidden px-8 py-3 font-rajdhani font-semibold tracking-wider uppercase text-sm;
+    @apply rounded-lg transition-all duration-300 ease-out;
+  }
+
+  .neon-button-primary {
+    @apply neon-button bg-primary text-primary-foreground;
+    box-shadow: 
+      0 0 20px hsl(var(--primary) / 0.4),
+      inset 0 0 20px hsl(var(--primary) / 0.1);
+  }
+
+  .neon-button-primary:hover {
+    box-shadow: 
+      0 0 30px hsl(var(--primary) / 0.6),
+      0 0 60px hsl(var(--primary) / 0.3),
+      inset 0 0 20px hsl(var(--primary) / 0.2);
+    transform: translateY(-2px);
+  }
+
+  .neon-button-outline {
+    @apply neon-button border-2 border-primary/50 text-primary bg-transparent;
+  }
+
+  .neon-button-outline:hover {
+    @apply border-primary bg-primary/10;
+    box-shadow: 
+      0 0 20px hsl(var(--primary) / 0.3),
+      inset 0 0 20px hsl(var(--primary) / 0.05);
+    transform: translateY(-2px);
+  }
+
+  .skill-tag {
+    @apply px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300;
+    @apply bg-muted/50 text-muted-foreground border border-border/30;
+  }
+
+  .skill-tag:hover {
+    @apply bg-primary/10 text-primary border-primary/30;
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
+  }
+
+  .section-title {
+    @apply font-rajdhani text-4xl md:text-5xl font-bold tracking-tight mb-4;
+  }
+
+  .floating {
+    animation: floating 6s ease-in-out infinite;
+  }
+
+  .floating-delayed {
+    animation: floating 6s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+.animation-delay-800 {
+  animation-delay: 800ms;
+}
