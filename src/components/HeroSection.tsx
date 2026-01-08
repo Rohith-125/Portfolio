@@ -54,7 +54,7 @@ const HeroSection = () => {
             Get in Touch
           </a>
           <a
-            href="/Rohith_Resume.pdf"
+            href="/Rohith - Resume.pdf"
             download
             className="neon-button-outline flex items-center gap-2"
           >
